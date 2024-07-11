@@ -1,4 +1,5 @@
 import time
+import uuid
 
 from sqlalchemy import select, delete
 
@@ -26,7 +27,7 @@ async def new_chat(chat_ids: list[int], user_id: int, end_time: int):
     end_time = end_time + 30*60
     async with async_session as session:
         for chat_id in chat_ids:
-            chat = Chat(user_id=user_id, chat_id=chat_id, end_time=end_time)
+            chat = Chat(hash_id=str(uuid.uuid4()), user_id=user_id, chat_id=chat_id, end_time=end_time)
             session.add(chat)
         await session.commit()
 
