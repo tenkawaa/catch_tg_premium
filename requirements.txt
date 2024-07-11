@@ -1,0 +1,6 @@
+pyrogram
+apscheduler
+loguru
+sqlalchemy
+aiosqlite
+pydantic_settings
