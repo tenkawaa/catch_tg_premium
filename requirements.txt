@@ -1,6 +1,7 @@
-pyrogram
+https://github.com/KurimuzonAkuma/pyrogram/archive/dev.zip --force-reinstall
 apscheduler
 loguru
 sqlalchemy
 aiosqlite
 pydantic_settings
+tgcrypto
