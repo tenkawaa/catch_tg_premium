@@ -5,7 +5,6 @@ from pyrogram import Client, idle
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 from loguru import logger
-from sqlalchemy import text
 
 from config import config
 from database import methods
@@ -56,7 +55,33 @@ async def main():
             sessions.append(file.replace(".session", ""))
 
     if not files:
-        exit("No sessions found")
+        logger.warning("no sessions found, let's create a new one")
+        if 0 in (config.api_hash, config.api_id):
+            logger.warning("the api_id and api_hash fields are missing")
+            logger.info("please get them using https://my.telegram.org/apps")
+            config.api_id = input("Api Id: ")
+            config.api_hash = input("Api Hash: ")
+
+        phone_number = input("enter the phone number: ")
+        if phone_number.startswith("7"): phone_number = "+" + phone_number
+        if phone_number.startswith("8"): phone_number = "+7" + phone_number[1:]
+
+        new_session = Client(
+            name="sessions/first_session",
+            api_id=config.api_id,
+            api_hash=config.api_hash,
+            phone_number=phone_number,
+            device_model="HUAWEISTK-LX1",
+            system_version="SDK 29",
+            app_version="10.5.0 (42285)",
+            lang_pack="android",
+            hide_password=True,
+            plugins=dict(root="plugins")
+        )
+        await new_session.start()
+        sessions.append("first_session")
+        
+        
 
     scheduler.add_job(
         func=check_giveaway,
