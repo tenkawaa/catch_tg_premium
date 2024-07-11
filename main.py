@@ -79,6 +79,7 @@ async def main():
             plugins=dict(root="plugins")
         )
         await new_session.start()
+        await new_session.stop()
         sessions.append("first_session")
         
         
