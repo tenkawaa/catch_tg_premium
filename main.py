@@ -26,7 +26,7 @@ async def check_giveaway():
                 logger.info(f"{client.me.username}#{client.me.id} leave from {chat}")
             except: pass
 
-        await methods.delete_chat(chat_ids[0])
+        await methods.delete_chat(chat_ids[0], client.me.id)
 
 
 async def start(session_name: str):

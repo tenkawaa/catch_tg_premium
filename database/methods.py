@@ -31,14 +31,14 @@ async def new_chat(chat_ids: list[int], user_id: int, end_time: int):
             session.add(chat)
         await session.commit()
 
-async def delete_chat(chat_ids: list[int]) -> None:
+async def delete_chat(chat_ids: list[int], user_id: int) -> None:
     current_time = int(time.time())
     for chat in chat_ids:
         print(chat)
         async with async_session as session:
             await session.execute(
                 delete(Chat)
-                .where(Chat.chat_id == chat, Chat.end_time < current_time)
+                .where(Chat.chat_id == chat, Chat.user_id == user_id, Chat.end_time < current_time)
             )
             await session.commit()
 
