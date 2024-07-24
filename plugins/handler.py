@@ -20,8 +20,9 @@ async def catch_giveaway(client: Client, message: Message):
     
     chat_ids = []
     for chat in giveaway.chats:
-        if chat.id in [-1001856700643]:
-            return
+        async for dialog in client.get_dialogs():
+            if dialog.chat.id == chat.id:
+                continue
 
         try:
             await client.join_chat(chat.id)
