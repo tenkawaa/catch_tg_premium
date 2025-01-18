@@ -54,7 +54,7 @@ async def main():
         if file.endswith(".session"):
             sessions.append(file.replace(".session", ""))
 
-    if not files:
+    if not sessions:
         logger.warning("no sessions found, let's create a new one")
         if 0 in (config.api_hash, config.api_id):
             logger.warning("the api_id and api_hash fields are missing")
